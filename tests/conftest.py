@@ -2,6 +2,7 @@ import pytest
 from app import create_app
 from app import db
 from app.models.planet import Planet
+from flask import jsonify
 
 
 @pytest.fixture
@@ -35,3 +36,7 @@ def eight_planets(app):
     ]
     db.session.add_all(eight_planets)
     db.session.commit()
+    planets_response = []
+    for planet in eight_planets:
+        planets_response.append(planet.to_json())
+    return planets_response
